@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase.js" integrity="sha512-xOm7T+n5pRgOd5Da97/0Tuvgwumw9fca80qIlLDJ7+qCvoJNYTpoNESwL3iJR9m8Klrf2W9ocgcTSP60ZUKJvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>CRUD with firestore</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="icon">
+        <h2 class="logo">Kivu</h2>
+    </div>
+
+    <div class="menu">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">SERVICE</a></li>
+            <li><a href="#">CONTACT</a></li>
+            <li><a href="#">ADMIN</a></li>
+        </ul>
+    </div>
+
+    <!-- <div class="search">
+        <input class="srch" type="search" name="" placeholder="Type To text">
+        <a href="#"> <button class="btn">Search</button></a>
+    </div> -->
+
+</div>
+
+  <div class="container">
+
+    
+    <header>
+      <h3>List Member</h3>
+    </header>
+    <div class="table-wrapper">
+      <table class="table-users">
+        <tr>
+          <th>Firts Name</th>
+          <th>Last Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </table>
+      <button class="btn btn-add">Add User</button>
+    </div>
+
+    <!-- Add Modal -->
+    <div class="add-modal modal-wrapper">
+      <div class="modal">
+        <div class="modal-header"><h3>Add New User</h3></div>
+        <div class="modal-body">
+          <form class="form" autocomplete="on">
+            <input type="text" name="firstName" id="firstName" placeholder="First Name">
+            <input type="text" name="lastName" id="lastName" placeholder="Last Name">
+            <input type="number" name="phone" id="phone" placeholder="Phone">
+            <input type="email" name="email" id="email" placeholder="Email">
+            <button class="btn btn-modal">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal modal-wrapper">
+      <div class="modal">
+        <div class="modal-header"><h3>Edit User</h3></div>
+        <div class="modal-body">
+          <form class="form" autocomplete="off">
+            <input type="text" name="firstName" placeholder="First Name">
+            <input type="text" name="lastName" placeholder="Last Name">
+            <input type="number" name="phone" placeholder="Phone">
+            <input type="email" name="email" placeholder="Email">
+            <button class="btn btn-modal">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-firestore.js"></script>
+
+   
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+     
+     databaseURL: "kivu-employees-db",
+     apiKey: "AIzaSyBfG_lcm3mvwa24UDctR3HhOgcpahLelVY",
+      authDomain: "kivu-employees-db.firebaseapp.com",
+      projectId: "kivu-employees-db",
+      storageBucket: "kivu-employees-db.appspot.com",
+      messagingSenderId: "345620903297",
+      appId: "1:345620903297:web:b2a6f93ada92db7aa6e480",
+      measurementId: "G-8BR1GPLZ2L"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+
+
+
+  </script>
+
+  <script src="./script.js"></script>
+</body>
+</html>
