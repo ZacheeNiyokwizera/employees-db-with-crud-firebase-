@@ -6,7 +6,7 @@ let addModal = document.querySelector('.add-modal');
 let addUserBtn = document.querySelector('.add-modal .form');
 
 let editModal = document.querySelector('.edit-modal');
-let editUserBtn = document.querySelector('.edit-modal .form');
+let updateUserBtn = document.querySelector('.edit-modal .form');
 
 let addBtn = document.querySelector('.btn-add');
 let tableUsers = document.querySelector('.table-users');
@@ -98,36 +98,40 @@ const tr = `
 
 tableUsers.insertAdjacentHTML('beforeend', tr);
 
-const btnEdit = document.querySelector(`[data-id='${doc.id}'] .btn-edit`);
-btnEdit.addEventListener('click', () => {
-  editModal.classList.add('modal-show');
-
-  id = doc.id;
-  editUserBtn.firstName.value = doc.data().firstName;
-  editUserBtn.lastName.value = doc.data().lastName;
-  editUserBtn.phone.value = doc.data().phone;
-  editUserBtn.email.value = doc.data().email;
-
-});
-
- // Click delete user
- const btnDelete = document.querySelector(`[data-id='${doc.id}'] .btn-delete`);
- btnDelete.addEventListener('click', () => {
-   db.collection('employees').doc(`${doc.id}`).delete().then(() => {
-     console.log('Document succesfully deleted!');
-   }).catch(err => {
-     console.log('Error removing document', err);
-   });
- });
-
-
-}
-
-
-
 // 6. function to delete a user in db
+const deleteBtn = document.querySelector(`[data-id='${doc.id}'] .btn-delete`);
+
+deleteBtn.addEventListener("click", () => {
+db.collection('employees').doc(`${doc.id}`).delete().then(() =>{
+
+  console.log("Document deleted.")
 
 
+}).catch(err =>{
+  console.log("error has occured", err)
+})
+})
+
+
+// 6. function to edit a user in db
+const btnEdit = document.querySelector(`[data-id='${doc.id}'] .btn-edit`);
+
+btnEdit.addEventListener("click", () => {
+  //displaying the edit modal
+  editModal.style.display = "block";
+
+  // return back the form value 
+id = doc.id; 
+  updateUserBtn.firstName.value = doc.data().firstName;
+  updateUserBtn.lastName.value  = doc.data().lastName;
+  updateUserBtn.email.value  = doc.data().email;
+  updateUserBtn.phone.value  =doc.data().phone;
+
+
+})
+
+editModal.style.display = "none";
+}
 
 
 // 7. function to edit a user in db
@@ -137,36 +141,17 @@ btnEdit.addEventListener('click', () => {
 
 // 8. Real time listener   
 
-
-// db.collection("employees").onSnapshot(snapshot => {
-
-//   snapshot.docChanges().forEach( change => {
-
-
-//     if(change.type === 'added'){
-//       displayUsers(change.doc);
-
-//     }
-//     if(change.type === 'removed'){
-      
-//     }
-//     if(change.type === 'modified'){
-      
-//     }
-
-    
-//   });
-// })
-
 db.collection('employees').onSnapshot(snapshot => {
   snapshot.docChanges().forEach(change => {
     if(change.type === 'added') {
       displayUsers(change.doc);
     }
     if(change.type === 'removed') {
+
       let tr = document.querySelector(`[data-id='${change.doc.id}']`);
       let tbody = tr.parentElement;
       tableUsers.removeChild(tbody);
+      
     }
     if(change.type === 'modified') {
       let tr = document.querySelector(`[data-id='${change.doc.id}']`);
@@ -179,25 +164,33 @@ db.collection('employees').onSnapshot(snapshot => {
 
 // update the data
 
-editUserBtn.addEventListener('submit', e => {
-  e.preventDefault();
-  db.collection('employees').doc(id).update({
-    firstName: editUserBtn.firstName.value,
-    lastName: editUserBtn.lastName.value,
-    phone: editUserBtn.phone.value,
-    email: editUserBtn.email.value,
-  });
-  editModal.classList.remove('modal-show');
+updateUserBtn.addEventListener('submit', e => {
+
+e.preventDefault();
+db.collection('employees').doc(id).update({
+
+  firstName: updateUserBtn.firstName.value,
+  lastName: updateUserBtn.lastName.value,
+  email : updateUserBtn.email.value,
+  phone : updateUserBtn.phone.value
   
-});
+  
+  })
+} )
 
 
   // User click anyware outside the modal
-  window.addEventListener('click', e => {
-    if(e.target === addModal) {
-      addModal.classList.remove('modal-show');
-    }
-    if(e.target === editModal) {
-      editModal.classList.remove('modal-show');
-    }
-  });
+
+window.addEventListener("click", e => {
+
+  if(e.target === addModal){
+
+    addModal.style.display = "none";
+  }else if(e.target === editModal){
+    editModal.style.display = "none";
+
+  }
+  
+})
+
+
